@@ -3,6 +3,7 @@ package cart;
 import base.BaseTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pages.CartPage;
 import pages.HomePage;
 import pages.ProductDetailPage;
 import pages.SearchResultsPage;
@@ -19,6 +20,7 @@ public class Cart extends BaseTest {
     public static SearchResultsPage searchResultsPage;
     public static SeleniumHelper seleniumHelper;
     public static ProductDetailPage productDetailPage;
+    public static CartPage cartPage;
     public static OtherHelper otherHelper;
     private static Assertions assertions;
     @Test
@@ -27,6 +29,7 @@ public class Cart extends BaseTest {
         searchResultsPage = new SearchResultsPage(driver);
         seleniumHelper = new SeleniumHelper(driver);
         productDetailPage = new ProductDetailPage(driver);
+        cartPage = new CartPage(driver);
         homePage.goToUrl("https://www.hepsiburada.com/");
         homePage.iconControl();
         homePage.searchBarControl();
@@ -38,8 +41,14 @@ public class Cart extends BaseTest {
         Assertions.assertTrue(seleniumHelper.isContainedTheTextByLocator(searchedProductHeader,homePage.productName),"Arama sonuçları sayfası doğru açılmadı.");
         searchResultsPage.goRandomProductDetailPage();
         seleniumHelper.switchToLastTab();
-        Assertions.assertTrue(productDetailPage.verifyProductName(),"Ürün detay sayfasına gidilemedi.");
+        boolean verifyState = productDetailPage.verifyProductName();
+        Assertions.assertTrue(verifyState,"Ürün detay sayfasına gidilemedi.");
         productDetailPage.addToCart();
-        Assertions.assertTrue(productDetailPage.verifyAddedToCard(),"Ürün sepete eklenmedi.");
+        productDetailPage.goToCart();
+        Assertions.assertTrue(cartPage.verifyOpenedCartPage(),"Sepet sayfasına gidilemedi.");
+        Assertions.assertTrue(cartPage.verifyProductNameInCart(),"Ürün sepet sayfasına gitmedi");
+
+        //Thread.sleep(30000);
+        //Assertions.assertTrue(productDetailPage.verifyAddedToCard(),"Ürün sepete eklenmedi.");
     }
 }

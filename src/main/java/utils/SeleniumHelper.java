@@ -151,6 +151,7 @@ public class SeleniumHelper extends OtherHelper{
         clickElementWebElement(elements.get(randomIndex));
         System.out.println(elements.get(randomIndex).getText());
         tempText = "";
+        //Burada arama sonuç sayfasında listelenen ürünlerden rastgele seçilenin adı temptext e alınıyor.
         tempText = elements.get(randomIndex).getAttribute("title");
     }
 

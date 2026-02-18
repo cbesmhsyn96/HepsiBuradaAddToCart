@@ -18,7 +18,6 @@ public class BaseTest{
     public void setUp() {
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver");
         driver = new ChromeDriver();
-        // Helper örneğini driver ile oluşturuyoruz
         helper = new SeleniumHelper(driver);
         driver.manage().window().maximize();
     }
