@@ -12,7 +12,6 @@ import utils.SeleniumHelper;
 
 import static pages.HomePage.productName;
 import static pages.SearchResultsPage.*;
-import static utils.OtherHelper.getRandomProductName;
 
 
 public class Cart extends BaseTest {
@@ -39,16 +38,16 @@ public class Cart extends BaseTest {
         searchResultsPage.stickyVerticalFilterControl();
         searchResultsPage.productListContainerControl();
         Assertions.assertTrue(seleniumHelper.isContainedTheTextByLocator(searchedProductHeader,homePage.productName),"Arama sonuçları sayfası doğru açılmadı.");
+        searchResultsPage.selectRandomBrandInVerticalMenu();
+        seleniumHelper.refreshPage();
+        searchResultsPage.verifySelectedBrandInList();
         searchResultsPage.goRandomProductDetailPage();
         seleniumHelper.switchToLastTab();
         boolean verifyState = productDetailPage.verifyProductName();
         Assertions.assertTrue(verifyState,"Ürün detay sayfasına gidilemedi.");
+        seleniumHelper.refreshPage();
         productDetailPage.addToCart();
-        productDetailPage.goToCart();
         Assertions.assertTrue(cartPage.verifyOpenedCartPage(),"Sepet sayfasına gidilemedi.");
-        Assertions.assertTrue(cartPage.verifyProductNameInCart(),"Ürün sepet sayfasına gitmedi");
-
-        //Thread.sleep(30000);
-        //Assertions.assertTrue(productDetailPage.verifyAddedToCard(),"Ürün sepete eklenmedi.");
+        Assertions.assertTrue(cartPage.verifyProductNameInCart(),"Ürün sepet sayfasına gitmedi(ürün adı görünmüyor)");
     }
 }

@@ -28,7 +28,6 @@ public class HomePage extends SeleniumHelper {
     }
 
 
-
     public void sendTextToElement(){
         waitForElement(odlHeader,"visible");
         waitForElement(homePageSearchBar,"clickable");
