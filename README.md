@@ -127,9 +127,9 @@ Bu class ta da sadece çağırma ve gerekli sınıf nesneleri tanımlanırdı.
 
 ---
 
-## 🖥 Olası Test Çıktısı (Console)
+## 🖥 Olası Test Çıktısı (Console)(20 Şubat)
 
-![Test Output](assets/screenshot.png)
+![Test Output](assets/20FebOptimizedVersionScreenshot.png)
 
 ---
 
