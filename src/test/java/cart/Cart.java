@@ -2,6 +2,7 @@ package cart;
 
 import base.BaseTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import pages.CartPage;
 import pages.HomePage;
@@ -22,7 +23,8 @@ public class Cart extends BaseTest {
     public static CartPage cartPage;
     public static OtherHelper otherHelper;
     private static Assertions assertions;
-    @Test
+    //@Test
+    @RepeatedTest(20)
     public void searchProductAddToCart() throws InterruptedException {
         homePage = new HomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);
@@ -44,10 +46,12 @@ public class Cart extends BaseTest {
         searchResultsPage.goRandomProductDetailPage();
         seleniumHelper.switchToLastTab();
         boolean verifyState = productDetailPage.verifyProductName();
+        //productDetailPage.verifyProductName();
         Assertions.assertTrue(verifyState,"Ürün detay sayfasına gidilemedi.");
         seleniumHelper.refreshPage();
         productDetailPage.addToCart();
         Assertions.assertTrue(cartPage.verifyOpenedCartPage(),"Sepet sayfasına gidilemedi.");
         Assertions.assertTrue(cartPage.verifyProductNameInCart(),"Ürün sepet sayfasına gitmedi(ürün adı görünmüyor)");
     }
+
 }

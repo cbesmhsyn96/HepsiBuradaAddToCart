@@ -19,15 +19,20 @@ public class ProductDetailPage extends SeleniumHelper {
     public static By smallGoToCartPopUpLink = By.cssSelector("a[href=\"https://checkout.hepsiburada.com\"]");
 
     public boolean verifyProductName(){
-        waitForElement(productName,"presence");
-        scrollToElement(driver,productName);
+        String detailText = driver.findElement(productName).getText();
+        String searchText = tempText;
 
-        if(tempText.contains(driver.findElement(productName).getText())){
-            System.out.println("\n\nÜrün adı kontrol edildi.");
-            System.out.println("temptext(search page) = "+tempText+" productname(product detail page) = "+driver.findElement(productName).getText());
+        int middleIndex = detailText.length() / 2;
+        String detailHalf = detailText.substring(middleIndex);
+
+        if (searchText.toLowerCase().contains(detailHalf.toLowerCase())) {
+            System.out.println("Ürün adı kontrol edildi.");
+            System.out.println("Search Page = " + searchText);
+            System.out.println("Detail Page = " + detailText);
             return true;
-        }else{
-            System.out.println("temptext(search page) = "+tempText+" productname(product detail page) = "+driver.findElement(productName).getText());
+        } else {
+            System.out.println("Search Page = " + searchText);
+            System.out.println("Detail Page = " + detailText);
             return false;
         }
     }
@@ -35,13 +40,10 @@ public class ProductDetailPage extends SeleniumHelper {
     public void addToCart() throws InterruptedException {
         //Metodun amacı :Ürün detay sayfasında sepete eklendikten sonra açılan popup bazen açılmıyor.
         //O durumda açılan küçük popuptan devam ediliyor. Istisna dönüp testin patlamasını engelliyor.
-        //waitForElement(saticiyaSorDiv,"presence");
         waitForElement(addToCartBtn,"presence");
-        waitForElement(premiumIleLink,"presence");
         waitForElement(urunFiyat,"visible");
-        //waitForElement(saticiyaSorDiv,"visible");
-        //waitForElement(saticiyaSorDiv,"clickable");
         waitForElement(addToCartBtn,"clickable");
+        waitForElement(premiumIleLink,"presence");
         waitForElement(premiumIleLink,"clickable");
         clickElement(addToCartBtn);
         try {

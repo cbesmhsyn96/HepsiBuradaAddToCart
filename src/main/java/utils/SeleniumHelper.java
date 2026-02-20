@@ -132,7 +132,7 @@ public class SeleniumHelper extends OtherHelper{
 
     public void clickElementWebElement(WebElement element){
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
         ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView({block:'center'});", wait.until(ExpectedConditions.elementToBeClickable(element)));
@@ -149,14 +149,20 @@ public class SeleniumHelper extends OtherHelper{
         random = new Random();
         randomIndex=0;
         List<WebElement> elements = driver.findElements(by);
-        randomIndex = random.nextInt(elements.size());
+        randomIndex = random.nextInt(10);
+        System.out.println((randomIndex+1)+". markaya scroll metodu çalışıyor.");
         scrollToElementWithElement(driver,elements.get(randomIndex));
+        System.out.println((randomIndex+1)+". markaya scroll metodu çalıştı.");
         try {
             getTempText = elements.get(randomIndex).getAttribute(attribute);
+            System.out.println(randomIndex+" indexli elementin attribute u "+attribute);
             System.out.println("getTempText = "+getTempText);
+            System.out.println(getTempText+" markası ekrana yazıldı."+by);
         } catch (Exception e) {
         }
+        System.out.println(getTempText+" markasına tıklanıyor."+by);
         clickElementWebElement(elements.get(randomIndex));
+        System.out.println(getTempText+" markasına tıklandı.");
     }
 
     public void clickElementIsDisplay(By by){

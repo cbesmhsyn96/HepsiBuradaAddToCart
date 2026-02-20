@@ -26,8 +26,9 @@ public class SearchResultsPage extends SeleniumHelper {
     private static By sepetimBtn = By.xpath("//div[starts-with(@id,'oldHeader_')]/div/div//a[@href='https://checkout.hepsiburada.com/sepetim']");
     private static By premiumuKesfetLink = By.xpath("//div[@data-test-id=\"nonPremium-logo\"]//a");
     private static By konumSecDiv = By.xpath("//*[starts-with(@id,\"shippingLocation_\")]/div/div/div/div/div[1]/div");
-
-
+    private static By hizliTeslimatDiv = By.cssSelector("div[id=\"VariantList.VariantListing.ShipmentDay\"]>div[id='VariantList.VariantListing.ShipmentDay']");
+    private static By indirimliDiv = By.cssSelector("div[id=\"stickyVerticalFilter\"] div[id=\"VariantList.VariantListing.TagList.HasDiscountWithConditionsGroup\"]>div[id=\"VariantList.VariantListing.TagList.HasDiscountWithConditionsGroup\"]");
+    private static By markalarDiv = By.cssSelector("#stickyVerticalFilter #markalar div[id=\"markalar\"]");
     public boolean controlSearchResultHeader(){
         return waitForElement(searchedProductHeader,"visible")!=null;
     }
@@ -52,19 +53,34 @@ public class SearchResultsPage extends SeleniumHelper {
         List<WebElement> products = driver.findElements(productNameList);
         //tempText = products.get(productIndex).getText();
         //System.out.println("Bu tempText, ürün detayda doğrulamada kullanılacak -->"+tempText);
+        System.out.println(products.get(randomIndex).getAttribute("title")+" ürününe tıklanıyor.");
         clickElementWebElement(products.get(randomIndex));
     }
 
     public void selectRandomBrandInVerticalMenu(){
         //stale element reference: stale element not found in the current frame için beklemeler koydum
+        System.out.println("sepetimBtn görünmesini bekliyor");
         waitForElement(sepetimBtn,"visible");
+        System.out.println("premiumuKesfetLink görünmesini bekliyor");
         waitForElement(premiumuKesfetLink,"visible");
         //waitForElement(stickyFilterSearchBar,"visible");
+        scrollToElement(driver,productNameList);
+        System.out.println("productNameList görünmesini bekliyor");
         waitForElement(productNameList,"visible");
 
         //waitForElement(firstBrandVerticalMenu,"visible");
         //waitForElement(topButtons,"visible");
-        waitForElement(firstBrandVerticalMenu,"visible");
+        waitForElement(indirimliDiv,"presence");
+        scrollToElement(driver,indirimliDiv);
+        waitForElement(indirimliDiv,"visible");
+        waitForElement(hizliTeslimatDiv,"presence");
+        scrollToElement(driver,firstBrandVerticalMenu);
+        waitForElement(hizliTeslimatDiv,"visible");
+        waitForElement(markalarDiv,"presence");
+        scrollToElement(driver,markalarDiv);
+        System.out.println("markalarDiv görünmesini bekliyor");
+        waitForElement(markalarDiv,"visible");
+        System.out.println("firstBrandVerticalMenu tıklanabilir olmasını bekliyor");
         selectRandomItemInList(firstBrandVerticalMenu,"value");
         /*try{
 
